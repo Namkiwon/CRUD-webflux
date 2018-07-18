@@ -19,9 +19,6 @@ public class ProductController {
 //    @Value("${spring.data.mongodb.uri}") private String dburl;
 //    @Value("${MongodbUrl}") private String url;
 
-
-
-
     @Autowired
     private ProductRepository productRepository;
 
@@ -41,7 +38,6 @@ public class ProductController {
         System.out.println(product.getName());
         return productRepository.save(product);
     }
-
 
     @PutMapping("/products/{id}")
     public Mono<ResponseEntity<Product>> updateProduct(@PathVariable(value = "id") String productId,
