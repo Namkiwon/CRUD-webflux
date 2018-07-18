@@ -2,21 +2,22 @@ package com.example.CRUDwebflux.Controller;
 
 import com.example.CRUDwebflux.Model.Product;
 import com.example.CRUDwebflux.Repository.ProductRepository;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import javax.validation.Valid;
-import com.google.gson.*;
 
 @RestController
 public class ProductController {
 
-    @Value("${spring.data.mongodb.uri}") private String dburl;
-    @Value("${MongodbUrl}") private String url;
+//    @Value("${spring.data.mongodb.uri}") private String dburl;
+//    @Value("${MongodbUrl}") private String url;
 
 
 
@@ -26,9 +27,6 @@ public class ProductController {
 
     @GetMapping("/products")
     public Flux<Product> getAllProducts(){
-        System.out.println(url+"1212");
-
-
         return productRepository.findAll();
     }
 
@@ -38,14 +36,9 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public Mono<Product> createProduct(@Valid @RequestBody JsonObject productJson) {
-        System.out.println("asdfasdf");
+    public Mono<Product> createProduct(@Valid @RequestBody Product product) {
 
-        System.out.println(productJson.get("name").getAsString());
-//        String id = productJson.get("id").getAsString();
-//        String name = productJson.get("name").getAsString();
-//        String shape = productJson.get("shape").getAsString();
-        Product product = new Product("asdf","asdf","asdfadf");
+        System.out.println(product.getName());
         return productRepository.save(product);
     }
 
