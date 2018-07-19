@@ -11,12 +11,17 @@ import java.io.Serializable;
 @Document(collection = "products")
 public class Product {
 
-@NotBlank
-@Size(max = 50)
-private String name;
 
-@NotNull
-private String shape;
+
+    @Id
+    private String id;
+
+    @NotBlank
+    @Size(max = 50)
+    private String name;
+
+    @NotNull
+    private String shape;
 
 
     public Product(){}
@@ -26,6 +31,14 @@ private String shape;
         this.shape = shape;
     }
 
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

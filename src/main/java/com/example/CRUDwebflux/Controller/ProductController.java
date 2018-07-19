@@ -27,19 +27,22 @@ public class ProductController {
         return productRepository.findAll();
     }
 
-    @GetMapping("/products/{productId}")
+    @GetMapping("/product/{id}")
     public Mono<ResponseEntity<Product>> getProductById(@PathVariable(value = "id") String productId){
         return productRepository.findById(productId).map(savedProduct -> ResponseEntity.ok(savedProduct)).defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/products")
+    @PostMapping("/product")
     public Mono<Product> createProduct(@Valid @RequestBody Product product) {
 
         System.out.println(product.getName());
         return productRepository.save(product);
     }
 
-    @PutMapping("/products/{id}")
+
+
+    @PutMapping("/product/{id}")
+
     public Mono<ResponseEntity<Product>> updateProduct(@PathVariable(value = "id") String productId,
                                                    @Valid @RequestBody Product product) {
         return productRepository.findById(productId)
