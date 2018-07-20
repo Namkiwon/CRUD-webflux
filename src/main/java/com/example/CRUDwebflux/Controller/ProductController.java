@@ -44,7 +44,7 @@ public class ProductController {
     @PutMapping("/products/{id}")
 
     public Mono<ResponseEntity<Product>> updateProduct(@PathVariable(value = "id") String productId,
-                                                   @Valid @RequestBody Product product) {
+                                                       @Valid @RequestBody Product product) {
         return productRepository.findById(productId)
                 .flatMap(existingProduct -> {
                     existingProduct.setName(product.getName());
@@ -53,6 +53,20 @@ public class ProductController {
                 })
                 .map(updatedTweet -> new ResponseEntity<>(updatedTweet, HttpStatus.OK))
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/products/{id}")
+    public Mono<ResponseEntity<Product>>  deleteProduct(@PathVariable(value = "id") String productId) {
+
+        return productRepository.deleteById(productId).flatMap(
+                existingProduct ->{
+                return productRepository.findById(productId);
+                })
+                .map(updatedTweet -> new ResponseEntity<>(updatedTweet, HttpStatus.OK))
+                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+//        productRepository.deleteById(productId);
+//        return productRepository.findById(productId);
     }
 
 }
